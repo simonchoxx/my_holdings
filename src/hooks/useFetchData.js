@@ -52,7 +52,7 @@ export const useFetchPrices = (coin, buy) => {
 					loading: false,
 				});
 			});
-		}, 2000);
+		}, 5000);
 	}, []);
 	return state;
 };

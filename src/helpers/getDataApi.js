@@ -58,12 +58,13 @@ export const getPrices = async (coin, buy) => {
 		urlBinance = `https://api.binance.com/api/v3/ticker/price?symbol=${coin}BTC`;
 		// const lastDay = `https://api.binance.com/api/v3/ticker/24hr?symbol=${coin}BTC`;
 		// const lastDayPrice = await fetch(lastDay);
-		// const data = await lastDayPrice.json();
+		// const { priceChange, priceChangePercent } = await lastDayPrice.json();
 
 		const resPrice = await fetch(urlBinance);
 		const { price } = await resPrice.json();
 		var percentage = porc(price, buy);
 		let percent = parseFloat(percentage);
+		// coins.push({ coin, price, buy, percent, priceChange, priceChangePercent });
 		coins.push({ coin, price, buy, percent });
 
 		result = coins.map((coi) => {
@@ -72,6 +73,8 @@ export const getPrices = async (coin, buy) => {
 				price: coi.price,
 				buy: buy,
 				percentage: percent,
+				// priceChange: priceChange,
+				// priceChangePercent: priceChangePercent,
 			};
 		});
 	} else {

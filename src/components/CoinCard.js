@@ -6,10 +6,14 @@ export const CoinCard = (coins) => {
 	const { symbol, name, logotipo, buy } = coins;
 	const { data: prices, loading } = useFetchPrices(symbol, buy);
 	let price,
-		percentage = 0;
+		percentage,
+		priceChange,
+		priceChangePercent = 0;
 	prices.forEach((v) => {
 		price = v.price;
 		percentage = v.percentage;
+		// priceChange = v.priceChange;
+		// priceChangePercent = v.priceChangePercent;
 	});
 
 	// if (!allCoins.find((o) => o.symbol === coins.symbol && o.buy === buy))
@@ -32,7 +36,7 @@ export const CoinCard = (coins) => {
 							</Card.Title>
 						</div>
 					</div>
-					<hr className="mt-0" />
+					<hr className="my-0" />
 					<Card.Body className="py-1 row">
 						<div className="col-7">
 							<Card.Text className="text-start">

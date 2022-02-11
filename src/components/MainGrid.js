@@ -44,7 +44,7 @@ export const MainGrid = () => {
 	usdTotal ||= sumaBtc * usd + usdCash;
 	eurTotal ||= usdTotal * usdeur;
 
-	const formatMoney = (val, curr) => {
+	const formatMoney = (val) => {
 		return isNaN(val)
 			? '-'
 			: val?.toLocaleString('de-DE', {

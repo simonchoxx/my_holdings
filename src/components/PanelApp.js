@@ -75,7 +75,7 @@ export const PanelApp = () => {
 						</button>
 					</div>
 					{coins.length > 0 ? (
-						<div className="row d-flex md:row-cols-4">
+						<div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
 							{coins.map((coi) => (
 								<CoinGrid key={coi.ticker} coin={coi.ticker} buy={coi.buy} />
 							))}

@@ -54,18 +54,19 @@ export const getCash = async () => {
 export const getPrices = async (coin, buy) => {
 	var coins = [];
 	let urlBinance, result;
+
 	if (coin !== 'USDT') {
 		urlBinance = `https://api.binance.com/api/v3/ticker/price?symbol=${coin}BTC`;
-		// const lastDay = `https://api.binance.com/api/v3/ticker/24hr?symbol=${coin}BTC`;
-		// const lastDayPrice = await fetch(lastDay);
-		// const { priceChange, priceChangePercent } = await lastDayPrice.json();
 
 		const resPrice = await fetch(urlBinance);
 		const { price } = await resPrice.json();
 		var percentage = porc(price, buy);
 		let percent = parseFloat(percentage);
-		// coins.push({ coin, price, buy, percent, priceChange, priceChangePercent });
-		coins.push({ coin, price, buy, percent });
+		const lastDay = `https://api.binance.com/api/v3/ticker/24hr?symbol=${coin}BTC`;
+		const lastDayPrice = await fetch(lastDay);
+		const { priceChange, priceChangePercent } = await lastDayPrice.json();
+		coins.push({ coin, price, buy, percent, priceChange, priceChangePercent });
+		// coins.push({ coin, price, buy, percent });
 
 		result = coins.map((coi) => {
 			return {
@@ -73,8 +74,8 @@ export const getPrices = async (coin, buy) => {
 				price: coi.price,
 				buy: buy,
 				percentage: percent,
-				// priceChange: priceChange,
-				// priceChangePercent: priceChangePercent,
+				priceChange: priceChange,
+				priceChangePercent: priceChangePercent,
 			};
 		});
 	} else {

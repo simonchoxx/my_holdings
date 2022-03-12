@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Row } from 'react-bootstrap';
 import { currencies } from '../helpers/data';
 import { AddCoinsModal } from './AddCoinsModal';
 import { CoinGrid } from './CoinGrid';
@@ -76,11 +75,11 @@ export const PanelApp = () => {
 						</button>
 					</div>
 					{coins.length > 0 ? (
-						<Row className="d-flex row-cols-4">
+						<div className="row d-flex md:row-cols-4">
 							{coins.map((coi) => (
 								<CoinGrid key={coi.ticker} coin={coi.ticker} buy={coi.buy} />
 							))}
-						</Row>
+						</div>
 					) : (
 						<p className="text-center">Loading</p>
 					)}

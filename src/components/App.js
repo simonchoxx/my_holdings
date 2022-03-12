@@ -1,18 +1,17 @@
 import React from 'react';
-import { Container, Row } from 'react-bootstrap';
 import { Header } from './Header';
 import { PanelApp } from './PanelApp';
 
 export const App = () => {
 	return (
-		<Container fluid>
-			<Row>
+		<div className="container-fluid">
+			<div className="row">
 				<Header></Header>
-			</Row>
-			<Row>
+			</div>
+			<div className="row">
 				<PanelApp></PanelApp>
-			</Row>
-		</Container>
+			</div>
+		</div>
 	);
 };
 

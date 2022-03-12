@@ -15,7 +15,7 @@ export var currencies = [
 export let holds = [
 	{
 		platform: 'Binance',
-		btc: 0.07112209,
+		btc: 0.07334481,
 	},
 	{
 		platform: 'Muun',
@@ -30,6 +30,6 @@ export let holds = [
 export let cash = [
 	{
 		platform: 'Caja',
-		usd: 3850,
+		usd: 3350,
 	},
 ];

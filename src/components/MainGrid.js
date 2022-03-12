@@ -88,10 +88,10 @@ export const MainGrid = () => {
 
 	return (
 		<>
-			<div className="items-center text-center grid grid-cols-5 gap-5">
-				<div className="col-span-2">
+			<div className="items-center text-center grid md:grid-cols-5 gap-5 md:mb-5">
+				<div className="md:col-span-2">
 					<div
-						className="bg-indigo-300 rounded-lg py-5 px-6 mb-4 text-base text-slate-900 mb-3"
+						className="bg-indigo-300 rounded-lg py-5 px-6 xs:mb-4 text-base text-slate-900"
 						role="alert"
 					>
 						<div className="h3">
@@ -101,7 +101,7 @@ export const MainGrid = () => {
 				</div>
 				<div className="">
 					<div
-						className="bg-yellow-400 rounded-lg py-5 px-6 mb-4 text-base text-slate-900 mb-3"
+						className="bg-yellow-400 rounded-lg py-5 px-6 xs:mb-4 text-base text-slate-900"
 						role="alert"
 					>
 						<div className="h4">
@@ -110,9 +110,9 @@ export const MainGrid = () => {
 						</div>
 					</div>
 				</div>
-				<div className="col-span-2">
+				<div className="md:col-span-2">
 					<div
-						className="bg-blue-300 rounded-lg py-5 px-6 mb-4 text-base text-slate-900 mb-3"
+						className="bg-blue-300 rounded-lg py-5 px-6 xs:mb-4 text-base text-slate-900"
 						role="alert"
 					>
 						<div className="h3">
@@ -130,11 +130,11 @@ export const MainGrid = () => {
 			</div>
 			<div className="col-12 flex items-center">
 				<div className="col-10 px-4">
-					<div className="flex flex-col mb-4">
+					<div className="flex flex-col">
 						<div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
 							<div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-								<div className="overflow-hidden">
-									<table className="min-w-full text-center">
+								<div className="overflow-x-auto">
+									<table className="min-w-full">
 										<thead className="border-b bg-gray-50">
 											<tr>
 												<th
@@ -161,12 +161,6 @@ export const MainGrid = () => {
 												>
 													EUR
 												</th>
-												{/* <th
-													scope="col"
-													className="text-sm font-medium text-gray-900 px-6 py-2"
-												>
-													%
-												</th> */}
 												<th
 													scope="col"
 													className="text-sm font-medium text-gray-900 px-6 py-2"
@@ -188,16 +182,14 @@ export const MainGrid = () => {
 													<td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
 														{formatMoney(res.btc * eur, 'EUR')}
 													</td>
-													{/* <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-														{((res.btc / sumaBtc) * 100).toFixed(2)}
-													</td> */}
 													<td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
 														<button className="btn btn-sm btn-outline-success">
-															<i
+															{/* <i
 																className="fas fa-pencil-alt"
 																title="Edit"
 																data-bs-toggle="tooltip"
-															></i>
+															></i> */}
+															A
 														</button>
 													</td>
 												</tr>
@@ -217,9 +209,6 @@ export const MainGrid = () => {
 												<td className="px-6 py-2 whitespace-nowrap text-base font-medium text-gray-900">
 													{formatMoney(sumaBtc * eur, 'EUR')}
 												</td>
-												{/* <td className="px-6 py-2 whitespace-nowrap text-base font-medium text-gray-900">
-													100
-												</td> */}
 												<td className="px-6 py-2 whitespace-nowrap text-base font-medium text-gray-900"></td>
 											</tr>
 										</tfoot>
@@ -267,12 +256,6 @@ export const MainGrid = () => {
 												>
 													EUR
 												</th>
-												{/* <th
-													scope="col"
-													className="text-sm font-medium text-gray-900 px-6 py-2"
-												>
-													%
-												</th> */}
 												<th
 													scope="col"
 													className="text-sm font-medium text-gray-900 px-6 py-2"
@@ -291,16 +274,14 @@ export const MainGrid = () => {
 													<td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
 														{formatMoney(eurCash, 'EUR')}
 													</td>
-													{/* <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-														100
-													</td> */}
 													<td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
 														<button className="btn btn-sm btn-outline-success">
-															<i
+															{/* <i
 																className="fas fa-pencil-alt"
 																title="Edit"
 																data-bs-toggle="tooltip"
-															></i>
+															></i> */}
+															A
 														</button>
 													</td>
 												</tr>
@@ -317,9 +298,6 @@ export const MainGrid = () => {
 												<td className="px-6 py-2 whitespace-nowrap text-base font-medium text-gray-900">
 													{formatMoney(eurCash, 'EUR')}
 												</td>
-												{/* <td className="px-6 py-2 whitespace-nowrap text-base font-medium text-gray-900">
-													100
-												</td> */}
 												<td className="px-6 py-2 whitespace-nowrap text-base font-medium text-gray-900"></td>
 											</tr>
 										</tfoot>

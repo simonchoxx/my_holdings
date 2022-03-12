@@ -45,14 +45,17 @@ export const useFetchPrices = (coin, buy) => {
 	const [state, setState] = useState({ data: [], loading: true });
 
 	useEffect(() => {
-		setInterval(() => {
-			getPrices(coin, buy).then((coi) => {
-				setState({
-					data: coi,
-					loading: false,
+		setInterval(
+			() => {
+				getPrices(coin, buy).then((coi) => {
+					setState({
+						data: coi,
+						loading: false,
+					});
 				});
-			});
-		}, 5000);
+			},
+			coin === 'USDT' ? 5000 : 15 * 1000
+		);
 	}, []);
 	return state;
 };

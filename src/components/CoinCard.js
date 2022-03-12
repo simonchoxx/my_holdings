@@ -12,8 +12,8 @@ export const CoinCard = (coins) => {
 	prices.forEach((v) => {
 		price = v.price;
 		percentage = v.percentage;
-		// priceChange = v.priceChange;
-		// priceChangePercent = v.priceChangePercent;
+		priceChange = v.priceChange;
+		priceChangePercent = v.priceChangePercent;
 	});
 
 	// if (!allCoins.find((o) => o.symbol === coins.symbol && o.buy === buy))
@@ -40,20 +40,31 @@ export const CoinCard = (coins) => {
 					<Card.Body className="py-1 row">
 						<div className="col-7">
 							<Card.Text className="text-start">
-								Compra: <strong>{buy.toFixed(8)}</strong>
+								Buy: <strong>{buy.toFixed(8)}</strong>
 							</Card.Text>
 							<Card.Text className="text-start">
-								Actual: <strong>{loading ? '-' : price}</strong>
+								Now: <strong>{loading ? '-' : price}</strong>
 							</Card.Text>
 						</div>
-						<div className="col-5 d-flex align-items-center justify-content-end">
-							<Card.Text className="text-start fs-3">
-								<strong
-									className={percentage > 0 ? 'text-success' : 'text-danger'}
-								>
-									{loading ? '-' : percentage}
-								</strong>
-							</Card.Text>
+						<div className="col-5 flex items-center">
+							<div>
+								<div className="text-center text-2xl">
+									<strong
+										className={percentage > 0 ? 'text-success' : 'text-danger'}
+									>
+										{loading ? '-' : percentage}
+									</strong>
+								</div>
+								<div className="text-center text-xs">
+									<strong
+										className={
+											priceChangePercent > 0 ? 'text-success' : 'text-danger'
+										}
+									>
+										{loading ? '-' : Number(priceChangePercent).toFixed(2)}
+									</strong>
+								</div>
+							</div>
 						</div>
 					</Card.Body>
 					<Card.Footer className="text-muted d-inline-flex justify-content-evenly">

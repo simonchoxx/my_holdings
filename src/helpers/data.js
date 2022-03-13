@@ -15,11 +15,11 @@ export var currencies = [
 export let holds = [
 	{
 		platform: 'Binance',
-		btc: 0.07334481,
+		btc: 0.06043541,
 	},
 	{
 		platform: 'Muun',
-		btc: 0.031493,
+		btc: 0.04442578,
 	},
 	{
 		platform: 'Exodus',

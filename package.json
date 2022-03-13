@@ -50,6 +50,5 @@
 	},
 	"devDependencies": {
 		"tailwindcss": "^3.0.19"
-	},
-	"homepage": "https://github.com/simonchoxx/my_holdings"
+	}
 }

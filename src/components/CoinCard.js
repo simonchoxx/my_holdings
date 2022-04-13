@@ -16,12 +16,6 @@ export const CoinCard = (coins) => {
 		priceChangePercent = v.priceChangePercent;
 	});
 
-	// if (!allCoins.find((o) => o.symbol === coins.symbol && o.buy === buy))
-	// 	allCoins.push({ ...coins, percentage });
-
-	// allCoins.sort((a, b) => (a.per < b.percentage ? 1 : -1));
-	// console.log(allCoins);
-
 	return (
 		<>
 			<Col className="my-3">
@@ -72,7 +66,7 @@ export const CoinCard = (coins) => {
 							Cerrar
 						</button>
 						<button type="btn" className="btn btn-outline-primary">
-							Recomprar
+							Editar
 						</button>
 					</Card.Footer>
 				</Card>

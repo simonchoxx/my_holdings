@@ -1,10 +1,12 @@
-import React from 'react';
-import { holds, cash } from '../helpers/data';
+import React, { useEffect, useState } from 'react';
+import { cash } from '../helpers/data';
 import { DoughnutChart } from './Chart';
+import { EditPlatfModal } from './EditPlatfModal';
 import {
 	useFetchPrices,
 	useFetchHolds,
 	useFetchCash,
+	useFetchPlatforms,
 } from '../hooks/useFetchData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,8 +14,16 @@ import {
 	faEuroSign,
 	faUsd,
 } from '@fortawesome/free-solid-svg-icons';
+import { dataCrypto, dataCash, formatMoney } from '../helpers/functions';
 
 export const MainGrid = () => {
+	const [show, setShow] = useState(false);
+	const [namePlatform, setNamePlatform] = useState();
+	const handleClose = () => setShow(false);
+	const handleShow = (resp) => {
+		setNamePlatform(resp);
+		setShow(true);
+	};
 	let usd,
 		eur,
 		usdCash,
@@ -26,7 +36,8 @@ export const MainGrid = () => {
 
 	const { data: prices } = useFetchHolds();
 	const { data: stocks } = useFetchCash();
-	const { data: priceBTC, loading } = useFetchPrices('USDT', '');
+	const { data: platf } = useFetchPlatforms();
+	const { data: priceBTC } = useFetchPrices('USDT', '');
 	priceBTC.forEach((v) => {
 		priceBTCNow ||= parseInt(v.price);
 	});
@@ -39,52 +50,11 @@ export const MainGrid = () => {
 	cash.forEach((v) => {
 		usdCash = v.usd;
 	});
-	holds.map((el) => (sumaBtc += el.btc));
+
+	platf.map((el) => (sumaBtc += el.satoshis));
 	eurCash ||= usdCash * usdeur;
 	usdTotal ||= sumaBtc * usd + usdCash;
 	eurTotal ||= usdTotal * usdeur;
-
-	const formatMoney = (val) => {
-		return isNaN(val)
-			? '-'
-			: val?.toLocaleString('de-DE', {
-					maximumFractionDigits: 2,
-			  });
-	};
-
-	// const pricesWs = new WebSocket(
-	// 	'wss://ws.coincap.io/prices?assets=bitcoin,ethereum,monero,litecoin'
-	// );
-
-	// pricesWs.onmessage = function(msg) {
-	// 	console.log(msg.data);
-	// };
-
-	const dataCrypto = {
-		labels: holds.map((el) => el.platform),
-		datasets: [
-			{
-				data: holds.map((el) => ((el.btc / sumaBtc) * 100).toFixed(2)),
-				backgroundColor: [
-					'rgb(133, 105, 241)',
-					'rgb(164, 101, 241)',
-					'rgb(101, 143, 241)',
-				],
-				hoverOffset: 4,
-			},
-		],
-	};
-
-	const dataCash = {
-		labels: ['Cash'],
-		datasets: [
-			{
-				data: [100],
-				backgroundColor: ['rgb(101, 143, 241)'],
-				hoverOffset: 4,
-			},
-		],
-	};
 
 	return (
 		<>
@@ -168,28 +138,26 @@ export const MainGrid = () => {
 											</tr>
 										</thead>
 										<tbody>
-											{holds.map((res, i) => (
+											{platf.map((res, i) => (
 												<tr className="bg-white border-b" key={i}>
 													<td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
-														{res.platform}
+														{res.name}
 													</td>
 													<td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-														{res.btc}
+														{res.satoshis}
 													</td>
 													<td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-														{formatMoney(res.btc * usd, 'USD')}
+														{formatMoney(res.satoshis * usd, 'USD')}
 													</td>
 													<td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-														{formatMoney(res.btc * eur, 'EUR')}
+														{formatMoney(res.satoshis * eur, 'EUR')}
 													</td>
 													<td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-														<button className="btn btn-sm btn-outline-success">
-															{/* <i
-																className="fas fa-pencil-alt"
-																title="Edit"
-																data-bs-toggle="tooltip"
-															></i> */}
-															A
+														<button
+															className="btn btn-sm btn-outline-success"
+															onClick={() => handleShow(res.name)}
+														>
+															Edit
 														</button>
 													</td>
 												</tr>
@@ -201,7 +169,9 @@ export const MainGrid = () => {
 													Totales
 												</td>
 												<td className="px-6 py-2 whitespace-nowrap text-base font-medium text-gray-900">
-													{sumaBtc}
+													{sumaBtc.toLocaleString('de-DE', {
+														minimumFractionDigits: 8,
+													})}
 												</td>
 												<td className="px-6 py-2 whitespace-nowrap text-base font-medium text-gray-900">
 													{formatMoney(sumaBtc * usd, 'USD')}
@@ -219,7 +189,7 @@ export const MainGrid = () => {
 					</div>
 				</div>
 				<div className="col-2">
-					<DoughnutChart chartData={dataCrypto} height={200} />
+					<DoughnutChart chartData={dataCrypto(platf, sumaBtc)} height={200} />
 				</div>
 			</div>
 
@@ -281,7 +251,7 @@ export const MainGrid = () => {
 																title="Edit"
 																data-bs-toggle="tooltip"
 															></i> */}
-															A
+															Edit
 														</button>
 													</td>
 												</tr>
@@ -308,9 +278,14 @@ export const MainGrid = () => {
 					</div>
 				</div>
 				<div className="col-2">
-					<DoughnutChart chartData={dataCash} />
+					<DoughnutChart chartData={dataCash()} />
 				</div>
 			</div>
+			<EditPlatfModal
+				show={show}
+				handleClose={handleClose}
+				platf={namePlatform}
+			/>
 		</>
 	);
 };

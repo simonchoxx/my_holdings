@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { porc } from './functions';
 
 export const getCoins = async (coin, buy) => {
@@ -91,4 +92,44 @@ export const getPrices = async (coin, buy) => {
 		});
 	}
 	return result;
+};
+
+export const getPlatforms = async () => {
+	const urlGetPlatforms = `https://myholdingsapi.herokuapp.com/api/platforms`;
+	const response = await fetch(urlGetPlatforms);
+	const result = await response.json();
+	return result.platforms;
+};
+
+export const getPlatformData = async (name) => {
+	const urlGetPlatforms = `https://myholdingsapi.herokuapp.com/api/platforms/${name}`;
+	try {
+		const response = await fetch(urlGetPlatforms, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const result = await response.json();
+		return result.msg;
+	} catch (error) {
+		return error;
+	}
+};
+
+export const updatePlatform = async (platf, sats) => {
+	const urlGetPlatforms = `https://myholdingsapi.herokuapp.com/api/platforms/update`;
+	try {
+		const response = await fetch(urlGetPlatforms, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ name: platf, satoshis: sats }),
+		});
+		const result = await response.json();
+		return result;
+	} catch (error) {
+		return error;
+	}
 };

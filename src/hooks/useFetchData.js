@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getCoins, getCash, getHolds, getPrices } from '../helpers/getDataApi';
+import {
+	getCoins,
+	getCash,
+	getHolds,
+	getPrices,
+	getPlatforms,
+} from '../helpers/getDataApi';
 
 export const useFetchHolds = () => {
 	const [state, setState] = useState({ data: [] });
@@ -10,7 +16,7 @@ export const useFetchHolds = () => {
 				data: res,
 			});
 		});
-	}, [state]);
+	}, []);
 	return state;
 };
 
@@ -23,7 +29,7 @@ export const useFetchCash = () => {
 				data: res,
 			});
 		});
-	}, [state]);
+	}, []);
 	return state;
 };
 
@@ -59,3 +65,31 @@ export const useFetchPrices = (coin, buy) => {
 	}, []);
 	return state;
 };
+
+export const useFetchPlatforms = () => {
+	const [state, setState] = useState({ data: [] });
+
+	useEffect(() => {
+		getPlatforms().then((plat) => {
+			setState({
+				data: plat,
+				loading: false,
+			});
+		});
+	}, [state]);
+	return state;
+};
+
+// export const useFetchPlatformSatoshis = (platf) => {
+// 	const [state, setState] = useState({ data: [] });
+
+// 	useEffect(() => {
+// 		getPlatformSats(platf).then((plat) => {
+// 			setState({
+// 				data: plat,
+// 				loading: false,
+// 			});
+// 		});
+// 	}, [platf]);
+// 	return state;
+// };

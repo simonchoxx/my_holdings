@@ -6,7 +6,7 @@ export const Header = () => {
 		<div className="px-0">
 			<img
 				src={image}
-				style={{ width: '100%', height: '60vh' }}
+				style={{ width: '100%', height: '60vh', objectFit: 'cover' }}
 				alt="Imagen"
 			></img>
 		</div>

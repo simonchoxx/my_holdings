@@ -1,5 +1,5 @@
 import React from 'react';
-import image from '../resources/stacked-peaks-haikei.png';
+import image from '../resources/crypto2.jpg';
 
 export const Header = () => {
 	return (

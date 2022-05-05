@@ -6,10 +6,10 @@ export const App = () => {
 	return (
 		<div className="container-fluid">
 			<div className="row">
-				<Header></Header>
+				<Header />
 			</div>
 			<div className="row">
-				<PanelApp></PanelApp>
+				<PanelApp />
 			</div>
 		</div>
 	);

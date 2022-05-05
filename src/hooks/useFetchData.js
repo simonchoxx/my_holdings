@@ -5,6 +5,7 @@ import {
 	getHolds,
 	getPrices,
 	getPlatforms,
+	getCashs,
 } from '../helpers/getDataApi';
 
 export const useFetchHolds = () => {
@@ -80,6 +81,19 @@ export const useFetchPlatforms = () => {
 	return state;
 };
 
+export const useFetchCashs = () => {
+	const [state, setState] = useState({ data: [] });
+
+	useEffect(() => {
+		getCashs().then((cash) => {
+			setState({
+				data: cash,
+				loading: false,
+			});
+		});
+	}, []);
+	return state;
+};
 // export const useFetchPlatformSatoshis = (platf) => {
 // 	const [state, setState] = useState({ data: [] });
 

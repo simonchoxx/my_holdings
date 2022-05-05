@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { porc } from './functions';
 
 export const getCoins = async (coin, buy) => {
@@ -101,10 +100,33 @@ export const getPlatforms = async () => {
 	return result.platforms;
 };
 
+export const getCashs = async () => {
+	const urlGetCashs = `https://myholdingsapi.herokuapp.com/api/cash`;
+	const response = await fetch(urlGetCashs);
+	const result = await response.json();
+	return result.cashs;
+};
+
 export const getPlatformData = async (name) => {
 	const urlGetPlatforms = `https://myholdingsapi.herokuapp.com/api/platforms/${name}`;
 	try {
 		const response = await fetch(urlGetPlatforms, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const result = await response.json();
+		return result.msg;
+	} catch (error) {
+		return error;
+	}
+};
+
+export const getCashData = async (name) => {
+	const urlGetCash = `https://myholdingsapi.herokuapp.com/api/cash/${name}`;
+	try {
+		const response = await fetch(urlGetCash, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -126,6 +148,23 @@ export const updatePlatform = async (platf, sats) => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({ name: platf, satoshis: sats }),
+		});
+		const result = await response.json();
+		return result;
+	} catch (error) {
+		return error;
+	}
+};
+
+export const updateCash = async (name, usd, eur) => {
+	const urlPutCash = `https://myholdingsapi.herokuapp.com/api/cash/update`;
+	try {
+		const response = await fetch(urlPutCash, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ name: name, usd: usd, eur: eur }),
 		});
 		const result = await response.json();
 		return result;

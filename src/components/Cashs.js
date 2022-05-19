@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { dataCash, formatMoney } from '../helpers/functions';
-import { getCashs } from '../helpers/getDataApi';
+import { getCashs } from '../helpers/getInternalsApis';
 import { DoughnutChart } from './Chart';
 
 export const Cashs = ({ handleShow }) => {

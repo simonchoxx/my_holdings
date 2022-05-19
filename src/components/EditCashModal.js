@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import { getCashData, updateCash } from '../helpers/getDataApi';
+import { getCashByName, updateCash } from '../helpers/getInternalsApis';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,7 +14,7 @@ export const EditCashModal = ({ show, handleClose, cash = '' }) => {
 	}, [cash]);
 
 	const getCash = async (cash) => {
-		const cash1 = await getCashData(cash);
+		const cash1 = await getCashByName(cash);
 		setDataCash(cash1);
 	};
 
@@ -84,7 +84,7 @@ export const EditCashModal = ({ show, handleClose, cash = '' }) => {
 								}
 								value={dataCash.usd || 0}
 							/>
-							<Form.Text className="text-muted">Ejemplo: 1</Form.Text>
+							<Form.Text className="text-muted">Ejemplo: 100</Form.Text>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="formBasicPrice">
 							<Form.Label>EUR</Form.Label>
@@ -96,7 +96,7 @@ export const EditCashModal = ({ show, handleClose, cash = '' }) => {
 								}
 								value={dataCash.eur || 0}
 							/>
-							<Form.Text className="text-muted">Ejemplo: 1</Form.Text>
+							<Form.Text className="text-muted">Ejemplo: 100</Form.Text>
 						</Form.Group>
 					</Form>
 				</Modal.Body>

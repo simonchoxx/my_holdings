@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import { getPlatformData, updatePlatform } from '../helpers/getDataApi';
+import { getPlatformByName, updatePlatform } from '../helpers/getInternalsApis';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,7 +20,7 @@ export const EditPlatfModal = ({ show, handleClose, platf = '' }) => {
 	// };
 
 	const getPlatform = async (platform) => {
-		const platform1 = await getPlatformData(platform);
+		const platform1 = await getPlatformByName(platform);
 		setPlatform(platform1.name);
 		setPrice(platform1.satoshis);
 	};

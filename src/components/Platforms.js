@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { dataCrypto, formatMoney } from '../helpers/functions';
-import { getHolds, getPlatforms } from '../helpers/getDataApi';
+import { getPlatforms } from '../helpers/getInternalsApis';
+import { getUsdEurBtcRate } from '../helpers/getExternalsApis';
 import { DoughnutChart } from './Chart';
 
 export const Platforms = ({ handleShow }) => {
 	const [platf, setPlatf] = useState([]);
-	const [usdEurBtc, setUsdEurBtc] = useState([]);
-	let usd,
-		eur,
-		sumaBtc = 0;
+	const [usdEurBtc, setUsdEurBtc] = useState();
+	let sumaBtc = 0;
 
 	const fetchPlatforms = async () => {
 		let response = await getPlatforms();
@@ -16,21 +15,16 @@ export const Platforms = ({ handleShow }) => {
 	};
 
 	const fetchUsdEurBtc = async () => {
-		let response = await getHolds();
+		let response = await getUsdEurBtcRate();
 		setUsdEurBtc(response);
 	};
 
 	useEffect(() => {
+		fetchPlatforms();
 		setInterval(() => {
-			fetchPlatforms();
 			fetchUsdEurBtc();
-		}, 10000);
+		}, 5000);
 	}, []);
-
-	usdEurBtc.forEach((v) => {
-		usd ||= v.usd;
-		eur ||= v.eur;
-	});
 
 	platf.map((el) => (sumaBtc += el.satoshis));
 
@@ -88,10 +82,16 @@ export const Platforms = ({ handleShow }) => {
 														{res.satoshis}
 													</td>
 													<td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-														{formatMoney(res.satoshis * usd, 'USD')}
+														{formatMoney(
+															res.satoshis * usdEurBtc?.priceUSD,
+															'USD'
+														)}
 													</td>
 													<td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-														{formatMoney(res.satoshis * eur, 'EUR')}
+														{formatMoney(
+															res.satoshis * usdEurBtc?.priceEUR,
+															'EUR'
+														)}
 													</td>
 													<td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
 														<button
@@ -115,10 +115,10 @@ export const Platforms = ({ handleShow }) => {
 													})}
 												</td>
 												<td className="px-6 py-2 whitespace-nowrap text-base font-medium text-gray-900">
-													{formatMoney(sumaBtc * usd, 'USD')}
+													{formatMoney(sumaBtc * usdEurBtc?.priceUSD, 'USD')}
 												</td>
 												<td className="px-6 py-2 whitespace-nowrap text-base font-medium text-gray-900">
-													{formatMoney(sumaBtc * eur, 'EUR')}
+													{formatMoney(sumaBtc * usdEurBtc?.priceEUR, 'EUR')}
 												</td>
 												<td className="px-6 py-2 whitespace-nowrap text-base font-medium text-gray-900"></td>
 											</tr>

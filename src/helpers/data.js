@@ -11,25 +11,3 @@ export var currencies = [
 	{ ticker: 'UNFI', buy: 0.000171 },
 	{ ticker: 'XNO', buy: 0.000079 },
 ];
-
-export let holds = [
-	{
-		platform: 'Binance',
-		btc: 0.06043541,
-	},
-	{
-		platform: 'Muun',
-		btc: 0.04442578,
-	},
-	{
-		platform: 'Exodus',
-		btc: 0.07161039,
-	},
-];
-
-export let cash = [
-	{
-		platform: 'Caja',
-		usd: 3350,
-	},
-];

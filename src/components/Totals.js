@@ -6,24 +6,16 @@ import {
 	faUsd,
 } from '@fortawesome/free-solid-svg-icons';
 import { formatMoney } from '../helpers/functions';
-import {
-	getCash,
-	getCashs,
-	getHolds,
-	getPlatforms,
-	getPrices,
-} from '../helpers/getDataApi';
+import { getCashs, getPlatforms } from '../helpers/getInternalsApis';
+import { getUsdEurRate, getUSDTPrice } from '../helpers/getExternalsApis';
 
 export const Totals = () => {
-	const [priceBtc, setPriceBtc] = useState([]);
-	const [usdEurBtc, setUsdEurBtc] = useState([]);
+	const [priceBtc, setPriceBtc] = useState();
 	const [cash, setCash] = useState([]);
 	const [platf, setPlatf] = useState([]);
 	const [usdEur, setUsdEur] = useState([]);
+
 	let sumaBtc = 0,
-		priceBTCNow = 0,
-		usdBtc,
-		eurBtc,
 		totalUsdCash,
 		totalEurCash,
 		usdTotal,
@@ -32,7 +24,6 @@ export const Totals = () => {
 	useEffect(() => {
 		setInterval(() => {
 			fetchPriceBtc();
-			fetchUsdEurBtc();
 			fetchCashs();
 			fetchUsdEur();
 			fetchPlatforms();
@@ -41,14 +32,8 @@ export const Totals = () => {
 
 	// PRECIO ACTUAL DEL BITCOIN EN USDT
 	const fetchPriceBtc = async () => {
-		let response = await getPrices('USDT', '');
+		let response = await getUSDTPrice();
 		setPriceBtc(response);
-	};
-
-	// PRECIO DEL DOLAR Y EL EURO CONTRA EL BITCOIN
-	const fetchUsdEurBtc = async () => {
-		let response = await getHolds();
-		setUsdEurBtc(response);
 	};
 
 	// CANTIDAD DE USD Y EUR EN CASH
@@ -59,7 +44,7 @@ export const Totals = () => {
 
 	// PRECIO DEL PAR USD-EUR
 	const fetchUsdEur = async () => {
-		let response = await getCash();
+		let response = await getUsdEurRate();
 		setUsdEur(response);
 	};
 
@@ -71,20 +56,11 @@ export const Totals = () => {
 
 	platf.map((el) => (sumaBtc += el.satoshis));
 
-	priceBtc.forEach((v) => {
-		priceBTCNow ||= parseInt(v.price);
-	});
-
-	usdEurBtc.forEach((v) => {
-		usdBtc ||= v.usd;
-		eurBtc ||= v.eur;
-	});
-
 	cash.forEach((v) => {
 		totalUsdCash = v.usd;
 		totalEurCash = v.eur;
 	});
-	usdTotal ||= sumaBtc * priceBTCNow + totalUsdCash;
+	usdTotal ||= sumaBtc * priceBtc + totalUsdCash;
 	eurTotal ||= usdTotal * usdEur + totalEurCash;
 
 	return (
@@ -106,8 +82,7 @@ export const Totals = () => {
 						role="alert"
 					>
 						<div className="h4">
-							{priceBTCNow?.toLocaleString('de-DE') || '-'}{' '}
-							<FontAwesomeIcon icon={faBitcoinSign} />
+							{formatMoney(priceBtc)} <FontAwesomeIcon icon={faBitcoinSign} />
 						</div>
 					</div>
 				</div>

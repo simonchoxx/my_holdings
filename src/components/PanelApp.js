@@ -74,15 +74,10 @@ export const PanelApp = () => {
 							></i>
 						</button>
 					</div>
-					{coins.length > 0 ? (
-						<div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-							{coins.map((coi) => (
-								<CoinGrid key={coi.ticker} coin={coi.ticker} buy={coi.buy} />
-							))}
-						</div>
-					) : (
-						<p className="text-center">Loading</p>
-					)}
+					{/* <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+						<CoinGrid />
+					</div> */}
+					<CoinGrid />
 				</div>
 			</div>
 			<AddCoinsModal

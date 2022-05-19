@@ -1,13 +1,19 @@
+import { Spinner } from '../components/Spinner';
+
 export const porc = (price, buy) => {
 	return (((price - buy) / buy) * 100).toFixed(2);
 };
 
 export const formatMoney = (val) => {
-	return isNaN(val)
-		? '-'
-		: val?.toLocaleString('de-DE', {
-				maximumFractionDigits: 2,
-		  });
+	return isNaN(val) ? (
+		<Spinner />
+	) : (
+		// ? '-'
+		// val?.toLocaleString('de-DE', {
+		// 	maximumFractionDigits: 2,
+		// })
+		parseFloat(val).toFixed(2)
+	);
 };
 
 export const dataCrypto = (platf, sumaBtc) => {

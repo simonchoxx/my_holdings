@@ -1,76 +1,91 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Card } from 'react-bootstrap';
-import { useFetchPrices } from '../hooks/useFetchData';
+import { getCoinPrice, getCoinsData } from '../helpers/getExternalsApis';
 
-export const CoinCard = (coins) => {
-	const { symbol, name, logotipo, buy } = coins;
-	const { data: prices, loading } = useFetchPrices(symbol, buy);
-	let price,
-		percentage,
-		priceChange,
-		priceChangePercent = 0;
-	prices.forEach((v) => {
-		price = v.price;
-		percentage = v.percentage;
-		priceChange = v.priceChange;
-		priceChangePercent = v.priceChangePercent;
-	});
+export const CoinCard = (coin) => {
+	const [dataCoin, setDataCoin] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	const getDataComplete = async (coin) => {
+		const response = await getCoinPrice(coin);
+		setDataCoin([response]);
+		setLoading(false);
+	};
+
+	useEffect(() => {
+		setInterval(() => {
+			getDataComplete(coin);
+		}, 5000);
+	}, []);
 
 	return (
 		<>
-			<Col className="my-3">
-				<Card className="text-center">
-					<div className="row">
-						<div className="col-5">
-							<Card.Img src={logotipo} />
-						</div>
-						<div className="col-7 d-flex align-items-center justify-content-center">
-							<Card.Title className="fs-6">
-								{name} ({symbol})
-							</Card.Title>
-						</div>
-					</div>
-					<hr className="my-0" />
-					<Card.Body className="py-1 row">
-						<div className="col-7">
-							<Card.Text className="text-start">
-								Buy: <strong>{buy.toFixed(8)}</strong>
-							</Card.Text>
-							<Card.Text className="text-start">
-								Now: <strong>{loading ? '-' : price}</strong>
-							</Card.Text>
-						</div>
-						<div className="col-5 flex items-center">
-							<div>
-								<div className="text-center text-2xl">
-									<strong
-										className={percentage > 0 ? 'text-success' : 'text-danger'}
-									>
-										{loading ? '-' : percentage}
-									</strong>
+			{dataCoin?.map((elem) => {
+				return (
+					<Col className="my-3" key={elem.ticker}>
+						<Card className="text-center">
+							<div className="row">
+								<div className="col-5">
+									<Card.Img
+										src={elem.logo}
+										style={{ width: '100px', height: '100px' }}
+									/>
 								</div>
-								<div className="text-center text-xs">
-									<strong
-										className={
-											priceChangePercent > 0 ? 'text-success' : 'text-danger'
-										}
-									>
-										{loading ? '-' : Number(priceChangePercent).toFixed(2)}
-									</strong>
+								<div className="col-7 d-flex align-items-center justify-content-center">
+									<Card.Title className="fs-6">
+										{elem.name} ({elem.ticker})
+									</Card.Title>
 								</div>
 							</div>
-						</div>
-					</Card.Body>
-					<Card.Footer className="text-muted d-inline-flex justify-content-evenly">
-						<button type="btn" className="btn btn-outline-success">
-							Cerrar
-						</button>
-						<button type="btn" className="btn btn-outline-primary">
-							Editar
-						</button>
-					</Card.Footer>
-				</Card>
-			</Col>
+							<hr className="my-0" />
+							<Card.Body className="py-1 row">
+								<div className="col-7">
+									<Card.Text className="text-start">
+										Buy: <strong>{elem.precioCompra.toFixed(8)}</strong>
+									</Card.Text>
+									<Card.Text className="text-start">
+										Now: <strong>{loading ? '-' : elem.price}</strong>
+									</Card.Text>
+								</div>
+								<div className="col-5 flex items-center">
+									<div>
+										<div className="text-center text-2xl">
+											<strong
+												className={
+													elem.percent > 0 ? 'text-success' : 'text-danger'
+												}
+											>
+												{loading ? '-' : elem.percent}
+											</strong>
+										</div>
+										<div className="text-center text-xs">
+											<strong
+												className={
+													elem.priceChangePercent > 0
+														? 'text-success'
+														: 'text-danger'
+												}
+											>
+												{loading
+													? '-'
+													: Number(elem.priceChangePercent).toFixed(2)}
+											</strong>
+										</div>
+									</div>
+								</div>
+							</Card.Body>
+							<Card.Footer className="text-muted d-inline-flex justify-content-evenly">
+								<button type="btn" className="btn btn-outline-success">
+									Cerrar
+								</button>
+								<button type="btn" className="btn btn-outline-primary">
+									Editar
+								</button>
+							</Card.Footer>
+						</Card>
+					</Col>
+				);
+			})}
 		</>
 	);
 };

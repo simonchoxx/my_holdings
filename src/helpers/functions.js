@@ -8,11 +8,9 @@ export const formatMoney = (val) => {
 	return isNaN(val) ? (
 		<Spinner />
 	) : (
-		// ? '-'
-		// val?.toLocaleString('de-DE', {
-		// 	maximumFractionDigits: 2,
-		// })
-		parseFloat(val).toFixed(2)
+		val?.toLocaleString('de-DE', {
+			maximumFractionDigits: 2,
+		})
 	);
 };
 

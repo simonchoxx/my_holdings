@@ -1,31 +1,5 @@
 import { porc } from './functions';
 
-// export const getCoinsData = async (elem) => {
-// 	const { ticker, precioCompra } = elem;
-// 	const urlCMC = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?symbol=${ticker}`;
-
-// 	const keyCMC = '	';
-// 	const response = await fetch(urlCMC, {
-// 		method: 'GET',
-// 		headers: {
-// 			'Content-Type': 'application/json',
-// 			'X-CMC_PRO_API_KEY': keyCMC,
-// 		},
-// 	});
-
-// 	const { data } = await response.json();
-// 	const { name, id } = data[ticker];
-// 	const logotipo = `https://s2.coinmarketcap.com/static/img/coins/128x128/${id}.png`;
-
-// 	const result = {
-// 		ticker,
-// 		name,
-// 		precioCompra,
-// 		logotipo,
-// 	};
-// 	return result;
-// };
-
 export const getCoinsData = async (elem) => {
 	const { ticker, precioCompra } = elem;
 	const keyNomics = '302ad25ee98878e436ea9823c805496480611af1';

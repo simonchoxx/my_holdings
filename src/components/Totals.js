@@ -82,7 +82,8 @@ export const Totals = () => {
 						role="alert"
 					>
 						<div className="h4">
-							{formatMoney(priceBtc)} <FontAwesomeIcon icon={faBitcoinSign} />
+							{formatMoney(Number.parseInt(priceBtc))}{' '}
+							<FontAwesomeIcon icon={faBitcoinSign} />
 						</div>
 					</div>
 				</div>

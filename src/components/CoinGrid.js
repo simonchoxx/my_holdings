@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { getCoinsData } from '../helpers/getExternalsApis';
 import { getCoins } from '../helpers/getInternalsApis';
 import { CoinCard } from './CoinCard';
 import { Spinner } from './Spinner';
@@ -14,7 +13,7 @@ export const CoinGrid = () => {
 
 	useEffect(() => {
 		fetchCoins();
-	}, []);
+	}, [coins]);
 
 	return (
 		<>

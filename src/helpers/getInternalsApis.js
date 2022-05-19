@@ -12,6 +12,28 @@ export const getCashs = async () => {
 	return result.cashs;
 };
 
+export const addCoin = async (ticker, name, price, logo) => {
+	const urlAdd = `https://myholdingsapi.herokuapp.com/api/coins/new`;
+	try {
+		const response = await fetch(urlAdd, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				ticker: ticker,
+				precioCompra: price,
+				name: name,
+				logo: logo,
+			}),
+		});
+		const result = await response.json();
+		return result;
+	} catch (error) {
+		return error;
+	}
+};
+
 export const getPlatformByName = async (name) => {
 	const urlGetPlatforms = `https://myholdingsapi.herokuapp.com/api/platforms/${name}`;
 	try {

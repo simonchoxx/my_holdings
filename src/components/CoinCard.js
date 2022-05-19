@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Card } from 'react-bootstrap';
-import { getCoinPrice, getCoinsData } from '../helpers/getExternalsApis';
+import { getCoinPrice } from '../helpers/getExternalsApis';
+import { Spinner } from './Spinner';
 
 export const CoinCard = (coin) => {
+	const { ticker } = coin;
 	const [dataCoin, setDataCoin] = useState([]);
 	const [loading, setLoading] = useState(true);
 
@@ -15,11 +17,16 @@ export const CoinCard = (coin) => {
 	useEffect(() => {
 		setInterval(() => {
 			getDataComplete(coin);
-		}, 5000);
-	}, []);
+		}, 15000);
+	}, [ticker]);
 
 	return (
 		<>
+			{!dataCoin.length && (
+				<div className="d-flex justify-content-center">
+					<Spinner />
+				</div>
+			)}
 			{dataCoin?.map((elem) => {
 				return (
 					<Col className="my-3" key={elem.ticker}>

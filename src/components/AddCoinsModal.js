@@ -1,21 +1,60 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import { currencies } from '../helpers/data';
+import { addCoin } from '../helpers/getInternalsApis';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 export const AddCoinsModal = ({ show, handleClose }) => {
 	const [coin, setCoin] = useState('');
+	const [name, setName] = useState('');
 	const [price, setPrice] = useState('');
+	const [logo, setLogo] = useState('');
 
 	const handleClean = () => {
 		setCoin('');
+		setName('');
 		setPrice('');
+		setLogo('');
 	};
 
-	const saveCoin = (e) => {
+	const saveCoin = async (e) => {
 		e.preventDefault();
-		currencies.push({ ticker: coin, buy: price });
-		setCoin('');
-		setPrice('');
+		const saveCoin = await addCoin(coin, name, price, logo);
+		if (saveCoin.ok) {
+			setCoin('');
+			setName('');
+			setPrice('');
+			setLogo('');
+			notifySuccess('Coin agregada exitosamente');
+		} else {
+			notifyError('Error al agregar la coin');
+		}
+	};
+
+	const notifySuccess = (msg) => {
+		toast.success(msg, {
+			position: 'top-right',
+			autoClose: 2000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+		});
+	};
+
+	const notifyError = (msg) => {
+		toast.error(msg, {
+			position: 'top-right',
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+		});
 	};
 
 	return (
@@ -37,6 +76,15 @@ export const AddCoinsModal = ({ show, handleClose }) => {
 							<Form.Text className="text-muted">Ejemplo: BTC</Form.Text>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="formBasicPrice">
+							<Form.Label>Nombre</Form.Label>
+							<Form.Control
+								type="Text"
+								placeholder="Ingrese nombre"
+								onChange={(event) => setName(event.target.value)}
+								value={name}
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="formBasicPrice">
 							<Form.Label>Precio compra</Form.Label>
 							<Form.Control
 								type="Text"
@@ -45,6 +93,15 @@ export const AddCoinsModal = ({ show, handleClose }) => {
 								value={price}
 							/>
 							<Form.Text className="text-muted">Ejemplo: 0.00000001</Form.Text>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="formBasicPrice">
+							<Form.Label>Logo</Form.Label>
+							<Form.Control
+								type="Text"
+								placeholder="Ingrese logo"
+								onChange={(event) => setLogo(event.target.value)}
+								value={logo}
+							/>
 						</Form.Group>
 					</Form>
 				</Modal.Body>

@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { currencies } from '../helpers/data';
 import { AddCoinsModal } from './AddCoinsModal';
 import { CoinGrid } from './CoinGrid';
 import { MainGrid } from './MainGrid';
 
 export const PanelApp = () => {
-	const [coins, setCoins] = useState(currencies);
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -74,9 +72,6 @@ export const PanelApp = () => {
 							></i>
 						</button>
 					</div>
-					{/* <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-						<CoinGrid />
-					</div> */}
 					<CoinGrid />
 				</div>
 			</div>

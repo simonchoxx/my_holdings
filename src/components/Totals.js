@@ -25,9 +25,14 @@ export const Totals = () => {
 		setInterval(() => {
 			fetchPriceBtc();
 			fetchCashs();
-			fetchUsdEur();
 			fetchPlatforms();
 		}, 10000);
+	}, []);
+
+	useEffect(() => {
+		setInterval(() => {
+			fetchUsdEur();
+		}, 3600000);
 	}, []);
 
 	// PRECIO ACTUAL DEL BITCOIN EN USDT

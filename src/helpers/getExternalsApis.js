@@ -69,10 +69,11 @@ export const getUsdEurBtcRate = async () => {
 };
 
 export const getUsdEurRate = async () => {
-	const urlConvertion = `https://www.freeforexapi.com/api/live?pairs=USDEUR`;
+	// const urlConvertion = `https://www.freeforexapi.com/api/live?pairs=USDEUR`;
+	const urlConvertion = `https://api.currencyfreaks.com/latest?apikey=7c77d33d3c7847e8abef9450e97c17c1`;
 	const response = await fetch(urlConvertion);
 	const result = await response.json();
-	return result.rates.USDEUR.rate;
+	return result.rates.EUR;
 };
 
 export const getUSDTPrice = async () => {

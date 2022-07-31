@@ -115,3 +115,19 @@ export const getCoins = async () => {
 		return error;
 	}
 };
+
+export const getTrades = async () => {
+	const urlGetTrades = `http://localhost:4000/api/trades`;
+	try {
+		const response = await fetch(urlGetTrades, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const result = await response.json();
+		return result.trades;
+	} catch (error) {
+		return error;
+	}
+};

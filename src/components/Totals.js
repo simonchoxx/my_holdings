@@ -32,6 +32,7 @@ export const Totals = () => {
 	useEffect(() => {
 		setInterval(() => {
 			fetchUsdEur();
+			// }, 5000);
 		}, 3600000);
 	}, []);
 

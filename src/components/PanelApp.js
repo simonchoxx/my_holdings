@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AddCoinsModal } from './AddCoinsModal';
 import { CoinGrid } from './CoinGrid';
 import { MainGrid } from './MainGrid';
+import { Trades } from './Trades';
 
 export const PanelApp = () => {
 	const [show, setShow] = useState(false);
@@ -37,10 +38,24 @@ export const PanelApp = () => {
 						data-bs-toggle="pill"
 						data-bs-target="#pills-alts"
 						role="tab"
-						aria-controls="pills-profile"
+						aria-controls="pills-alts"
 						aria-selected="false"
 					>
 						AltCoins
+					</a>
+				</li>
+				<li className="nav-item" role="presentation">
+					<a
+						href="#pills-trades"
+						className="nav-link block font-medium text-xs leading-tight uppercase rounded px-6 py-3 my-2 md:mx-2 focus:outline-none focus:ring-0"
+						id="pills-profile-tab"
+						data-bs-toggle="pill"
+						data-bs-target="#pills-trades"
+						role="tab"
+						aria-controls="pills-trades"
+						aria-selected="false"
+					>
+						Trades
 					</a>
 				</li>
 			</ul>
@@ -73,6 +88,14 @@ export const PanelApp = () => {
 						</button>
 					</div>
 					<CoinGrid />
+				</div>
+				<div
+					className="tab-pane fade show active"
+					id="pills-trades"
+					role="tabpanel"
+					aria-labelledby="pills-trades-tab"
+				>
+					<Trades />
 				</div>
 			</div>
 			<AddCoinsModal

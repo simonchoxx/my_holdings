@@ -117,7 +117,7 @@ export const getCoins = async () => {
 };
 
 export const getTrades = async () => {
-	const urlGetTrades = `http://localhost:4000/api/trades`;
+	const urlGetTrades = `https://myholdingsapi.herokuapp.com/api/trades`;
 	try {
 		const response = await fetch(urlGetTrades, {
 			method: 'GET',
